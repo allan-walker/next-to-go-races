@@ -2,8 +2,8 @@
 
 A Vue 3 single-page application that displays “Next to Go” races using the Neds Racing API, featuring real-time countdowns, category filters, Pinia state management, and Tailwind styling.
 
-
 # Acceptance criteria
+
 - The app displays five upcoming races at all times, sorted by advertised start time (ascending).
 - Each race shows meeting name, race number, and a live countdown timer to start.
 - Races automatically disappear one minute after their advertised start time.
@@ -18,4 +18,35 @@ A Vue 3 single-page application that displays “Next to Go” races using the N
 - Clear README documentation explaining setup, architecture, and key design decisions.
 
 Optional / Nice-to-haves
+
 - Category filters persist for the session (optional enhancement).
+
+## Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Type-Check, Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+### Run Unit Tests with [Vitest](https://vitest.dev/)
+
+```sh
+npm run test:unit
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
+```
