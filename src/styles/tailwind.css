@@ -1,3 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+/* Tailwind v4 core */
 @import 'tailwindcss';
+
+/* Design tokens */
+@theme {
+  /* fonts */
+  --font-sans: Inter, 'Open Sans', Roboto, sans-serif;
+
+  /* colors */
+  --color-navy-50: #edf0f2;
+  --color-navy-100: #e8eef4;
+  --color-navy-200: #d7e0ea;
+  --color-navy-300: #d9e2ec;
+  --color-navy-400: #d4dee8;
+  --color-navy-500: #0b2b4c;
+  --color-navy-600: #0f233a;
+
+  --color-neutral-50: #ffffff;
+  --color-neutral-100: #5c6b7a;
+
+  --color-red-500: #e0463b;
+
+  /* misc */
+  --shadow-soft: 0 2px 18px rgba(15, 35, 58, 0.08);
+  --radius-xl2: 1rem;
+}
+
+/* Custom utilities */
+@layer utilities {
+  .debug-border {
+    outline: 2px solid red;
+  }
+}

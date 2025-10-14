@@ -26,14 +26,19 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-900 text-white font-sans p-6">
+  <div class="min-h-screen bg-navy-50 text-navy-600 font-sans p-6">
     <header>
-      <h1 class="text-4xl font-semibold text-white">Next to Go</h1>
-      <CategoryToggle class="mt-3" />
+      <h1 class="text-xl font-semibold tracking-wide uppercase">Neds Racing</h1>
     </header>
 
     <main>
-      <RaceList />
+      <section class="">
+        <div class="flex items-center justify-between">
+          <h2 class="text-l font-semibold tracking-wide uppercase">Next to Go Racing</h2>
+          <CategoryToggle class="mt-3" />
+        </div>
+        <RaceList />
+      </section>
     </main>
   </div>
 </template>
