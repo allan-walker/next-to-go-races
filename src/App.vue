@@ -3,6 +3,7 @@ import { onMounted, onUnmounted } from 'vue'
 
 import CategoryToggle from '@/components/CategoryToggle.vue'
 import RaceList from '@/components/RaceList.vue'
+import Panel from '@/components/Panel.vue'
 import { useRacesStore } from '@/stores/races.store'
 
 const store = useRacesStore()
@@ -32,13 +33,7 @@ onUnmounted(() => {
     </header>
 
     <main>
-      <section class="">
-        <div class="flex items-center justify-between">
-          <h2 class="text-l font-semibold tracking-wide uppercase">Next to Go Racing</h2>
-          <CategoryToggle class="mt-3" />
-        </div>
-        <RaceList />
-      </section>
+      <Panel />
     </main>
   </div>
 </template>
