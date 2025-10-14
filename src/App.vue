@@ -26,12 +26,14 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <header>
-    <h1 class="text-4xl font-semibold text-white">Next to Go</h1>
-    <CategoryToggle class="mt-3" />
-  </header>
+  <div class="min-h-screen bg-gray-900 text-white font-sans p-6">
+    <header>
+      <h1 class="text-4xl font-semibold text-white">Next to Go</h1>
+      <CategoryToggle class="mt-3" />
+    </header>
 
-  <main>
-    <RaceList />
-  </main>
+    <main>
+      <RaceList />
+    </main>
+  </div>
 </template>
