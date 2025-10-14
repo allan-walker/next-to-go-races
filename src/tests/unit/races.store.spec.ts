@@ -42,6 +42,33 @@ suite('useRacesStore', () => {
     vi.resetAllMocks()
   })
 
+  test('filters out races that are >60s past advertised start', () => {
+    const store = useRacesStore()
+    store.currentTime = nowMs
+
+    const expired61s = makeRace({ advertised_start: { seconds: nowSec - 61 } })
+    const expired60s = makeRace({ advertised_start: { seconds: nowSec - 60 } }) // still allowed
+    const future = makeRace({ advertised_start: { seconds: nowSec + 10 } })
+
+    store.raceData = [expired61s, expired60s, future]
+
+    const ids = store.filteredSorted.map((r) => r.race_id)
+    expect(ids).toContain(expired60s.race_id)
+    expect(ids).toContain(future.race_id)
+    expect(ids).not.toContain(expired61s.race_id)
+  })
+
+  test('sorts races by advertised_start ascending', () => {
+    const store = useRacesStore()
+    store.currentTime = nowMs
+
+    const later = makeRace({ advertised_start: { seconds: nowSec + 200 } })
+    const sooner = makeRace({ advertised_start: { seconds: nowSec + 100 } })
+    store.raceData = [later, sooner]
+
+    expect(store.filteredSorted.map((r) => r.race_id)).toEqual([sooner.race_id, later.race_id])
+  })
+
   test('visibleFive returns at most 5 items from filtered & sorted', () => {
     const store = useRacesStore()
     store.currentTime = nowMs
@@ -91,5 +118,12 @@ suite('useRacesStore', () => {
 
     const cats = new Set(store.filteredSorted.map((r) => r.category_id))
     expect(cats).toEqual(new Set([GREYHOUND_ID]))
+  })
+
+  test('tick updates currentTime using Date.now()', () => {
+    const store = useRacesStore()
+    vi.setSystemTime(nowMs + 5000)
+    store.tick()
+    expect(store.currentTime).toBe(nowMs + 5000)
   })
 })
