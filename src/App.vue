@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
 
+import CategoryToggle from '@/components/CategoryToggle.vue'
 import RaceList from '@/components/RaceList.vue'
 import { useRacesStore } from '@/stores/races.store'
 
@@ -27,6 +28,7 @@ onUnmounted(() => {
 <template>
   <header>
     <h1 class="text-4xl font-semibold text-white">Next to Go</h1>
+    <CategoryToggle class="mt-3" />
   </header>
 
   <main>
