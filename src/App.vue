@@ -1,13 +1,26 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 
 import RaceList from '@/components/RaceList.vue'
 import { useRacesStore } from '@/stores/races.store'
 
 const store = useRacesStore()
+let pollId: number
+let tickId: number
 
 onMounted(async () => {
   await store.refresh()
+
+  // Poll the API every 15s to refresh race data
+  pollId = window.setInterval(() => store.refresh(), 15000)
+
+  // Update countdown timers every second
+  tickId = window.setInterval(() => store.tick(), 1000)
+})
+onUnmounted(() => {
+  // Stop timers when component unmounts
+  clearInterval(pollId)
+  clearInterval(tickId)
 })
 </script>
 
