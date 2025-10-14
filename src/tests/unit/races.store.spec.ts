@@ -126,4 +126,35 @@ suite('useRacesStore', () => {
     store.tick()
     expect(store.currentTime).toBe(nowMs + 5000)
   })
+
+  test('refresh sets loading, populates raceData on success, and clears error', async () => {
+    const store = useRacesStore()
+    const sample = [makeRace(), makeRace({ category_id: GREYHOUND_ID })]
+
+    ;(fetchNextRaces as unknown as ReturnType<typeof vi.fn>).mockResolvedValueOnce(sample)
+
+    const p = store.refresh()
+    expect(store.isLoading).toBe(true)
+    await p
+
+    expect(fetchNextRaces).toHaveBeenCalledWith(50)
+    expect(store.isLoading).toBe(false)
+    expect(store.error).toBeNull()
+    expect(store.raceData).toEqual(sample)
+  })
+
+  test('refresh sets error on failure and stops loading', async () => {
+    const store = useRacesStore()
+    ;(fetchNextRaces as unknown as ReturnType<typeof vi.fn>).mockRejectedValueOnce(
+      new Error('boom'),
+    )
+
+    const p = store.refresh()
+    expect(store.isLoading).toBe(true)
+    await p
+
+    expect(store.isLoading).toBe(false)
+    expect(store.error).toBe('boom')
+    expect(Array.isArray(store.raceData)).toBe(true)
+  })
 })
