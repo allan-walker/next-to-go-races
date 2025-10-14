@@ -6,7 +6,8 @@ import type { Race } from '@/types/neds'
 export const useRacesStore = defineStore('races', {
   state: () => ({
     raceData: [] as Race[],
-    enabledRaces: new Set<string>(Object.keys(RACE_CATEGORIES)),
+    // Using a Set here to ensure no duplicates and for clean toggling regardless of item position.
+    enabledCategories: new Set<string>(Object.keys(RACE_CATEGORIES)),
     currentTime: Date.now(),
     isLoading: false,
     error: null as string | null,
@@ -24,7 +25,7 @@ export const useRacesStore = defineStore('races', {
     filteredSorted(state): Race[] {
       const nowSec = Math.floor(state.currentTime / 1000)
       return state.raceData
-        .filter((r) => state.enabledRaces.has(r.category_id))
+        .filter((r) => state.enabledCategories.has(r.category_id))
         .filter((r) => nowSec <= r.advertised_start.seconds + 60)
         .sort((a, b) => a.advertised_start.seconds - b.advertised_start.seconds)
     },
@@ -39,6 +40,17 @@ export const useRacesStore = defineStore('races', {
     },
   },
   actions: {
+    /**
+     * Toggles a category’s active state.
+     * - If the category ID is currently enabled, remove it.
+     * - If it’s disabled, add it.
+     * Uses a Set for fast lookup and uniqueness.
+     */
+    toggleCategory(id: string) {
+      this.enabledCategories.has(id)
+        ? this.enabledCategories.delete(id)
+        : this.enabledCategories.add(id)
+    },
     tick() {
       this.currentTime = Date.now()
     },
