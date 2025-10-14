@@ -11,7 +11,33 @@ export const useRacesStore = defineStore('races', {
     isLoading: false,
     error: null as string | null,
   }),
-  getters: {},
+  getters: {
+    /**
+     * Returns all valid races that:
+     *  - belong to one of the currently enabled race categories
+     *  - have not expired (within 60 seconds past their advertised start)
+     *  - are sorted by advertised start time (ascending)
+     *
+     * This getter ensures the UI always works with a clean, time-ordered
+     * subset of current races that should still be visible to the user.
+     */
+    filteredSorted(state): Race[] {
+      const nowSec = Math.floor(state.currentTime / 1000)
+      return state.raceData
+        .filter((r) => state.enabledRaces.has(r.category_id))
+        .filter((r) => nowSec <= r.advertised_start.seconds + 60)
+        .sort((a, b) => a.advertised_start.seconds - b.advertised_start.seconds)
+    },
+    /**
+     * Returns the first five races from the filtered & sorted list.
+     *
+     * This represents the "Next to Go" set shown in the UI.
+     * If fewer than five valid races are available, returns all that qualify.
+     */
+    visibleFive(): Race[] {
+      return this.filteredSorted.slice(0, 5)
+    },
+  },
   actions: {
     tick() {
       this.currentTime = Date.now()
