@@ -25,6 +25,16 @@ const countdownClass = computed(() => {
   return 'text-navy-600'
 })
 
+// Screen-reader-friendly countdown for aria-label
+const a11yCountdown = computed(() => {
+  const s = Math.max(secondsRemaining.value, 0)
+  const m = Math.floor(s / 60),
+    r = s % 60
+  const mp = m === 1 ? 'minute' : 'minutes'
+  const sp = r === 1 ? 'second' : 'seconds'
+  return m ? `${m} ${mp} ${r ? `${r} ${sp}` : ''}`.trim() : `${r} ${sp}`
+})
+
 // Category label
 const categoryLabel = computed(() => RACE_CATEGORIES[props.categoryId] ?? 'Unknown')
 </script>
@@ -38,9 +48,22 @@ const categoryLabel = computed(() => RACE_CATEGORIES[props.categoryId] ?? 'Unkno
     <time
       class="tabular-nums text-lg font-semibold transition-colors duration-300"
       :class="countdownClass"
+      :datetime="`PT${Math.max(secondsRemaining, 0)}S`"
+      :aria-label="
+        secondsRemaining > 0
+          ? `Starts in ${a11yCountdown}`
+          : status === 'starting'
+            ? 'Starting now'
+            : 'Closed'
+      "
       aria-live="polite"
     >
       {{ countdown }}
     </time>
+
+    <!-- A small assertive live region for status flips -->
+    <p class="sr-only" aria-live="assertive" aria-atomic="true">
+      {{ status === 'starting' ? 'Race starting' : status === 'closed' ? 'Race closed' : '' }}
+    </p>
   </li>
 </template>
