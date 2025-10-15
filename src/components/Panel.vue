@@ -25,21 +25,23 @@ const props = withDefaults(
 
 // let parent override defaults via props
 const panelClasses = computed(() => [
-  'bg-neutral-50',
+  'bg-neutral-50 max-w-[800px] w-full',
   props.rounded && 'rounded-xl2',
   props.elevated && 'shadow-soft',
   props.ring && 'ring-1 ring-navy-400',
 ])
 
-const bodyClasses = computed(() => [props.padded && 'p-6'])
+const bodyClasses = computed(() => [props.padded && 'p-4 sm:p-6'])
 
 const headerClasses = computed(() => [
-  'flex items-center justify-between',
-  props.padded ? 'px-6 pt-6' : '',
+  'flex items-center justify-between flex-col sm:flex-row gap-2',
+  props.padded ? 'px-4 pt-4 sm:pt-6 sm:px-6' : '',
   props.divider ? 'pb-4 border-b border-navy-300' : 'pb-3',
 ])
 
-const contentClasses = computed(() => [props.padded ? 'px-6 pb-6 pt-4' : ''])
+const contentClasses = computed(() => [
+  props.padded ? 'px-4 pb-4 pt-1 sm:px-6 sm:pb-6 sm:pt-2' : '',
+])
 </script>
 
 <template>
@@ -48,7 +50,7 @@ const contentClasses = computed(() => [props.padded ? 'px-6 pb-6 pt-4' : ''])
       <component
         :is="headingTag"
         v-if="title"
-        class="text-xl font-semibold tracking-wide uppercase text-navy-600"
+        class="text-2xl font-semibold tracking-wide uppercase text-navy-600"
       >
         {{ title }}
       </component>

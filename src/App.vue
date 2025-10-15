@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
 
+import HeaderBar from '@/components/HeaderBar.vue'
 import CategoryToggle from '@/components/CategoryToggle.vue'
 import RaceList from '@/components/RaceList.vue'
 import Panel from '@/components/Panel.vue'
@@ -27,13 +28,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-navy-50 text-navy-600 font-sans p-6">
-    <header>
-      <h1 class="text-xl font-semibold tracking-wide uppercase">Neds Racing</h1>
-    </header>
+  <div class="min-h-screen bg-navy-50 pb-6 text-navy-600 font-sans">
+    <HeaderBar />
 
-    <main class="mt-6">
-      <Panel title="Next to Go Racing" :divider="true">
+    <main class="p-2 sm:p-6 flex w-full flex-col items-center">
+      <Panel title="Next to Go Races" :divider="true">
         <template #actions>
           <CategoryToggle />
         </template>
