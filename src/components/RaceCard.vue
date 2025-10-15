@@ -20,9 +20,20 @@ const countdown = computed(() => formatCountdown(currentTime.value, props.startS
 
 // Determine text color based on race timing or status.
 const countdownClass = computed(() => {
-  if (props.status === 'starting' || props.status === 'closed') return 'text-red-500'
+  if (props.status === 'starting' || props.status === 'closed') return 'text-gray-500'
   if (secondsRemaining.value <= 60 && secondsRemaining.value > 0) return 'text-brand'
   return 'text-navy-600'
+})
+
+// Dynamic card outline + opacity
+const cardClass = computed(() => {
+  if (props.status === 'starting' || props.status === 'closed') {
+    return 'opacity-70 border-navy-200'
+  }
+  if (secondsRemaining.value <= 60 && secondsRemaining.value > 0) {
+    return 'border-brand'
+  }
+  return 'border-navy-200'
 })
 
 // Screen-reader-friendly countdown for aria-label
@@ -40,7 +51,10 @@ const categoryLabel = computed(() => RACE_CATEGORIES[props.categoryId] ?? 'Unkno
 </script>
 
 <template>
-  <li class="flex items-center justify-between rounded-xl2 border p-3 shadow-sm">
+  <li
+    class="flex items-center justify-between rounded-xl2 border p-3 shadow-sm transition-all duration-300"
+    :class="cardClass"
+  >
     <div>
       <p class="font-medium text-navy-600">{{ meetingName }}</p>
       <p class="text-sm text-gray-500">{{ categoryLabel }} – Race {{ raceNumber }}</p>
