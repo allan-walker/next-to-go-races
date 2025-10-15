@@ -28,7 +28,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-navy-50 pb-6 text-navy-600 font-sans">
+  <div id="main" class="min-h-screen bg-navy-50 pb-6 text-navy-600 font-sans">
     <HeaderBar />
 
     <main class="p-2 sm:p-6 flex w-full flex-col items-center">
