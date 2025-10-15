@@ -128,3 +128,14 @@ This project is an example of how I build robust UI features. the steps I ttook 
 - Implement sorting and pagination (if applicable)
 - Write E2E tests (Playwright or Cypress)
 - Prepare for deployment (Vite build optimization, environment variables)
+
+# Tests
+## Races Store Tests
+Eight Test cases:
+<img width="707" height="304" alt="Screenshot 2025-10-15 at 2 14 48 PM" src="https://github.com/user-attachments/assets/4f74ef3c-d738-4999-b5f3-187a88cfba15" />
+
+## Countdown Tests
+Three Test cases:
+<img width="528" height="223" alt="Screenshot 2025-10-15 at 2 18 10 PM" src="https://github.com/user-attachments/assets/a679974b-1784-44f5-89d4-f932479dfa4d" />
+
+
