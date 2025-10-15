@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { useId, computed } from 'vue'
 
 type HeadingTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 
@@ -42,13 +42,19 @@ const headerClasses = computed(() => [
 const contentClasses = computed(() => [
   props.padded ? 'px-4 pb-4 pt-1 sm:px-6 sm:pb-6 sm:pt-2' : '',
 ])
+
+// A11y: Generates a unique ID for the heading and links it to the <section>
+// via aria-labelledby so screen readers announce the region using its visible title.
+const uid = useId?.() ?? Math.random().toString(36).slice(2)
+const headingId = computed(() => `panel-title-${uid}`)
 </script>
 
 <template>
-  <section :class="panelClasses" role="region">
+  <section :class="panelClasses" role="region" :aria-labelledby="headingId">
     <header v-if="title || $slots.actions" :class="headerClasses">
       <component
         :is="headingTag"
+        :id="headingId"
         v-if="title"
         class="text-2xl font-semibold tracking-wide uppercase text-navy-600"
       >
