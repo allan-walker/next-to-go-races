@@ -32,8 +32,15 @@ onUnmounted(() => {
       <h1 class="text-xl font-semibold tracking-wide uppercase">Neds Racing</h1>
     </header>
 
-    <main>
-      <Panel />
+    <main class="mt-6">
+      <Panel title="Next to Go Racing" :divider="true">
+        <template #actions>
+          <CategoryToggle />
+        </template>
+        <template #panelBody>
+          <RaceList />
+        </template>
+      </Panel>
     </main>
   </div>
 </template>

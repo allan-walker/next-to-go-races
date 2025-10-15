@@ -22,6 +22,24 @@ const props = withDefaults(
     divider: false,
   },
 )
+
+// let parent override defaults via props
+const panelClasses = computed(() => [
+  'bg-neutral-50',
+  props.rounded && 'rounded-xl2',
+  props.elevated && 'shadow-soft',
+  props.ring && 'ring-1 ring-navy-400',
+])
+
+const bodyClasses = computed(() => [props.padded && 'p-6'])
+
+const headerClasses = computed(() => [
+  'flex items-center justify-between',
+  props.padded ? 'px-6 pt-6' : '',
+  props.divider ? 'pb-4 border-b border-navy-300' : 'pb-3',
+])
+
+const contentClasses = computed(() => [props.padded ? 'px-6 pb-6 pt-4' : ''])
 </script>
 
 <template>
@@ -40,7 +58,7 @@ const props = withDefaults(
       </div>
     </header>
 
-    <div>
+    <div :class="[bodyClasses, !title && !$slots.actions ? '' : contentClasses]">
       <slot name="panelBody" />
     </div>
   </section>
