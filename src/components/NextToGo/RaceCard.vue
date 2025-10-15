@@ -12,6 +12,8 @@ const props = defineProps<{
   categoryId: string
   status?: 'open' | 'starting' | 'closed'
 }>()
+type CategoryId = keyof typeof RACE_CATEGORIES
+
 const store = useRacesStore()
 const { currentTime } = storeToRefs(store)
 const secondsRemaining = computed(() => Math.floor(props.startSeconds - currentTime.value / 1000))
@@ -47,7 +49,12 @@ const a11yCountdown = computed(() => {
 })
 
 // Category label
-const categoryLabel = computed(() => RACE_CATEGORIES[props.categoryId] ?? 'Unknown')
+const isCategoryId = (id: string): id is CategoryId => id in RACE_CATEGORIES
+
+const categoryLabel = computed(() => {
+  const id = props.categoryId
+  return isCategoryId(id) ? RACE_CATEGORIES[id] : 'Unknown'
+})
 </script>
 
 <template>
