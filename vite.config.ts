@@ -16,4 +16,14 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
   },
+  server: {
+    // Establish a proxy to deal with CORS issue on Prod.
+    proxy: {
+      '/api/neds': {
+        target: 'https://api.neds.com.au',
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/api\/neds/, ''),
+      },
+    },
+  },
 })

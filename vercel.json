@@ -1,0 +1,3 @@
+{
+  "rewrites": [{ "source": "/api/neds/(.*)", "destination": "/api/neds?path=$1" }]
+}
